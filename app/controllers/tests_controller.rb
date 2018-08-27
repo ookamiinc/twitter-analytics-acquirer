@@ -7,8 +7,8 @@ class TestsController < ActionController::Base
   protect_from_forgery with: :exception
 
   def home
-    start_date = (Time.now).to_i.to_s + "000"
-    end_date = ((Time.now).to_i - (60 * 60 * 24 * 7)).to_s + "999"
+    start_date = ((Time.now).to_i - (60 * 60 * 24 * 28)).to_s + "000"
+    end_date = (Time.now).to_i.to_s + "999"
     user = 'handball_japans'
     pass = '0125MISOmiso'
     agent = Mechanize.new
