@@ -1,5 +1,6 @@
 class TestsController < ActionController::Base
   require 'csv'
+  require "google_drive"
   require 'mechanize'
   require 'time'
 
