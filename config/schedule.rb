@@ -3,6 +3,6 @@ set :output, 'log.rb'
 # 実行環境の指定
 set :environment, :development
 
- every :hour do
+ every :day do
   rake "twitter_data:output"
 end
