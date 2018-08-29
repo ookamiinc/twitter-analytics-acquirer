@@ -5,11 +5,11 @@ require 'rails'
 require 'byebug'
 
 
-id_array = ['ID']
+id_array = [ENV['TWITTER_ID']]
 
 id_array.each do |id|
 
-  pass, sp_url = 'PASS', "https://docs.google.com/spreadsheets/d/1mNAJZp0B0nLZ6dYuoMZuYDmIRUd_w8PiiY_NtEUFTW8/edit#gid=0" if id == 'ID'
+  pass, sp_url = ENV['TWITTER_PASS'], ENV['SPREADSHEET_URL'] if id == ENV['TWITTER_ID']
 
   start_date = (Time.now.beginning_of_month).to_i.to_s + "000"
   end_date = (Time.now).to_i.to_s + "999"
