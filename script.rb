@@ -1,4 +1,5 @@
 require 'csv'
+require "googleauth"
 require "google_drive"
 require 'mechanize'
 require 'rails'
@@ -25,7 +26,15 @@ id_array.each do |id|
   file = agent.get(bundle_url)
   file.save
   analytics_file = File.read(file.filename)
-  session = GoogleDrive::Session.from_config("config.json")
+  credentials = Google::Auth::UserRefreshCredentials.new(
+    client_id: ENV['GOOGLE_CLIENT_ID'],
+    client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+    scope: [
+      "https://www.googleapis.com/auth/drive",
+      "https://spreadsheets.google.com/feeds/",
+    ],
+    refresh_token: ENV['GOOGLE_REFRESH_TOKEN'])
+  session = GoogleDrive::Session.from_credentials(credentials)
   sp = session.spreadsheet_by_url(sp_url)
   ws = sp.worksheet_by_title("test_volley")
   # CSVをパースし、１行目の１列目から順に埋めていく。
