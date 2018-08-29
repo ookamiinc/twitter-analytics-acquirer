@@ -1,24 +1,17 @@
-# README
+twitter-analytics-acquirer
+Post twitter analytics data to google spreadsheets
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ENV
+You need to specify the ENV values below.
 
-Things you may want to cover:
+# [Required]
 
-* Ruby version
+# Twitter Auth
+TWITTER_ID=YOUR_TWITTER_ID
+TWITTER_PASS=YOUR_TWITTER_PASSWORD
 
-* System dependencies
+# Google Auth
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Google Spreadsheet
+SPREADSHEET_URL=YOUR_SPREADSHEET_URL
