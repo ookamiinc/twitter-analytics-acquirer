@@ -6,11 +6,11 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.4.4'
+gem 'activesupport'
+gem 'clockwork'
 gem "google_drive"
 gem 'mechanize'
-gem 'nokogiri'
 gem 'rails', '5.0.7'
-gem 'whenever'
 
 group :development do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
