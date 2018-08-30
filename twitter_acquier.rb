@@ -38,10 +38,10 @@ class TwitterAcquier
     [export_url, bundle_url]
   end
 
-  def obtain_data_file(agent, export_url, bundle_url)
+  def obtain_csv(agent, export_url, bundle_url)
     agent.post(export_url)
-    file = agent.get(bundle_url)
-    file.save
-    file
+    res = agent.get(bundle_url)
+    csv = res.body.force_encoding('utf-8')
+    csv
   end
 end
