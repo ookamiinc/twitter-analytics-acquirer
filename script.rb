@@ -6,7 +6,7 @@ require 'rails'
 require 'byebug'
 
 require './google_data_sender'
-require './twitter_acquier'
+require './twitter_scraper'
 
 id_array = [ENV['TWITTER_ID']]
 
