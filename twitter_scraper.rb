@@ -18,6 +18,11 @@ class TwitterScraper
 
   def obtain_analytics_data(agent, export_url, bundle_url)
     agent.post(export_url)
+    for i in 1..10 do
+      res = agent.get(bundle_url)
+      break unless res.body == ""
+      sleep(5)
+    end
     res = agent.get(bundle_url)
     analytics_data = res.body.force_encoding('utf-8')
     analytics_data
