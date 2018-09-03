@@ -34,11 +34,11 @@ class TwitterAnalyticsClient
   private
 
   def start_date
-    @start_date ||= (Time.now.beginning_of_month).to_i.to_s + "000"
+    @start_date ||= ( Time.now.beginning_of_month.since(9.hours)).to_i.to_s + "000"
   end
 
   def end_date
-    @end_date ||= (Time.now).to_i.to_s + "999"
+    @end_date ||= (Time.now.since(9.hours)).to_i.to_s + "999"
   end
 
   def export_url
