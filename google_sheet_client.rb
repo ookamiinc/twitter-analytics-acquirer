@@ -11,6 +11,7 @@ class GoogleSheetClient
 
   def write_in_spreadsheet(csv, worksheet_name)
     worksheet = worksheet(worksheet_name)
+    worksheet.delete_rows(1, worksheet.num_rows)
     i = 1
     CSV.parse(csv).each do |row|
       j = 1
