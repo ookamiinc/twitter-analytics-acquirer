@@ -12,13 +12,11 @@ class GoogleSheetClient
   def write_in_spreadsheet(csv, worksheet_name)
     worksheet = worksheet(worksheet_name)
     worksheet.delete_rows(1, worksheet.num_rows)
-    i = 1
-    CSV.parse(csv).each do |row|
+    CSV.parse(csv).each.with_index do |row, index|
       j = 1
-      for j in 1..40 do
-        worksheet[i,j] = row[j - 1]
+      for j in 1..row.count do
+        worksheet[index + 1, j] = row[j - 1]
       end
-      i += 1
     end
     worksheet.save
   end
