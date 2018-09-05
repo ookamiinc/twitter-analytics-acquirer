@@ -1,7 +1,6 @@
 require 'csv'
 require "googleauth"
 require "google_drive"
-require 'byebug'
 
 class GoogleSheetClient
   def initialize(url)
