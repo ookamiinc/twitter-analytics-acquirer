@@ -17,7 +17,6 @@ class TwitterAnalyticsClient
     form.field_with(name: "session[username_or_email]").value = @user
     form.field_with(name: "session[password]").value = @password
     form.submit
-    puts "Logged in Twitter @#{@user} password: #{@password}"
   end
 
   def get_analytics_data
