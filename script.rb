@@ -1,6 +1,5 @@
 require './twitter_analytics_client'
 require './google_sheet_client'
-require 'byebug'
 
 twitter_user = ENV['TWITTER_ID']
 twitter_password = ENV['TWITTER_PASS']
