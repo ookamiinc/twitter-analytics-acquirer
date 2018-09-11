@@ -1,13 +1,21 @@
 require './twitter_analytics_client'
 require './google_sheet_client'
 
-twitter_user = ENV['TWITTER_ID']
-twitter_password = ENV['TWITTER_PASS']
 spreadsheet_url = ENV['SPREADSHEET_URL']
-worksheet_name = ENV['WORKSHEET_NAME']
-analytics_client = TwitterAnalyticsClient.new(twitter_user, twitter_password)
-analytics_client.login
-csv = analytics_client.get_analytics_data
+twitter_users = [ENV['TWITTER_ID'],ENV['TWITTER_ID2']]
 
-sheet_client = GoogleSheetClient.new(spreadsheet_url)
-sheet_client.write_in_spreadsheet(csv, worksheet_name)
+twitter_users.each do |twitter_user|
+  if twitter_user == ENV['TWITTER_ID1']
+    twitter_password = ENV['TWITTER_PASS1']
+    worksheet_name = ENV['WORKSHEET_NAME']
+  elsif twitter_user == ENV['TWITTER_ID2']
+    twitter_password = ENV['TWITTER_PASS2']
+    worksheet_name = ENV['WORKSHEET_NAME2']
+  end
+  analytics_client = TwitterAnalyticsClient.new(twitter_user, twitter_password)
+  analytics_client.login
+  csv = analytics_client.get_analytics_data
+
+  sheet_client = GoogleSheetClient.new(spreadsheet_url)
+  sheet_client.write_in_spreadsheet(csv, worksheet_name)
+end
