@@ -8,10 +8,11 @@ class TwitterAnalyticsClient
   def initialize(user, password)
     @user = user
     @password = password
+    @agent = Mechanize.new
+    @agent.user_agent_alias = 'Mac Mozilla'
   end
 
   def login
-    @agent = Mechanize.new
     page = @agent.get(BASE_URI)
     form = page.forms[1]
     form.field_with(name: "session[username_or_email]").value = @user
