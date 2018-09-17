@@ -30,6 +30,18 @@ class TwitterAnalyticsClient
     res.body.force_encoding('utf-8')
   end
 
+  def cookies_to_yaml_string
+    cookies_io_write = StringIO.new("", 'r+')
+    @agent.cookie_jar.save(cookies_io_write, {:session => true})
+    cookies_io_write.string
+  end
+
+  def set_cookies(cookies_yaml)
+    cookies_io_read = StringIO.new(cookies_yaml, 'r')
+    @agent.cookie_jar.clear
+    @agent.cookie_jar.load(cookies_io_read)
+  end
+
   private
 
   def start_date
