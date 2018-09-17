@@ -7,9 +7,11 @@ end
 
 ruby '2.4.4'
 gem 'activesupport'
+gem 'activerecord'
 gem 'clockwork'
 gem "google_drive"
 gem 'mechanize'
+gem 'mysql2'
 gem 'rails', '5.0.7'
 
 group :development do
