@@ -1,5 +1,6 @@
 require 'mechanize'
 require 'rails'
+require './twitter_accounts'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'.freeze
@@ -18,6 +19,10 @@ class TwitterAnalyticsClient
     form.field_with(name: "session[username_or_email]").value = @user
     form.field_with(name: "session[password]").value = @password
     form.submit
+  end
+
+  def save_cookies
+    TwitterAccounts.create(name: "#{@user}", cookies: cookies_to_yaml_string)
   end
 
   def get_analytics_data
