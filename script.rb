@@ -3,7 +3,7 @@ require './google_sheet_client'
 require './twitter_accounts'
 
 spreadsheet_url = ENV['SPREADSHEET_URL']
-twitter_users = [ENV['TWITTER_ID'],ENV['TWITTER_ID2']]
+twitter_users = [ENV['TWITTER_ID1'],ENV['TWITTER_ID2']]
 
 twitter_users.each do |twitter_user|
   if twitter_user == ENV['TWITTER_ID1']
