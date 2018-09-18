@@ -18,6 +18,23 @@ class TwitterAnalyticsClient
     get_analytics_data
   end
 
+  def set_cookies(cookies_yaml)
+    cookies_io_read = StringIO.new(cookies_yaml, 'r')
+    @agent.cookie_jar.clear
+    @agent.cookie_jar.load(cookies_io_read)
+  end
+
+  def get_analytics_data
+    return if @agent.nil?
+    @agent.post(export_url)
+    for i in 1..10 do
+      res = @agent.get(bundle_url)
+      break unless res.body.empty?
+      sleep(5)
+    end
+    res.body.force_encoding('utf-8')
+  end
+
   def get_analytics_data_with_login
     login
     csv = get_analytics_data
@@ -37,22 +54,6 @@ class TwitterAnalyticsClient
     @user.update(cookies: cookies_to_yaml_string)
   end
 
-  def set_cookies(cookies_yaml)
-    cookies_io_read = StringIO.new(cookies_yaml, 'r')
-    @agent.cookie_jar.clear
-    @agent.cookie_jar.load(cookies_io_read)
-  end
-
-  def get_analytics_data
-    return if @agent.nil?
-    @agent.post(export_url)
-    for i in 1..10 do
-      res = @agent.get(bundle_url)
-      break unless res.body.empty?
-      sleep(5)
-    end
-    res.body.force_encoding('utf-8')
-  end
 
   def cookies_to_yaml_string
     cookies_io_write = StringIO.new("", 'r+')
