@@ -13,6 +13,20 @@ class TwitterAnalyticsClient
     @agent.user_agent_alias = 'Mac Mozilla'
   end
 
+  def get_analytics_data_with_cookies
+    twitter_account = TwitterAccount.find_by(name: @user)
+    return unless twitter_account
+    set_cookies(twitter_account.cookies)
+    get_analytics_data
+  end
+
+  def get_analytics_data_with_login
+    login
+    csv = get_analytics_data
+    save_cookies if csv
+    csv
+  end
+
   def login
     page = @agent.get(BASE_URI)
     form = page.forms[1]

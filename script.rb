@@ -14,14 +14,8 @@ twitter_users.each do |twitter_user|
     worksheet_name = ENV['WORKSHEET_NAME2']
   end
   analytics_client = TwitterAnalyticsClient.new(twitter_user, twitter_password)
-  twitter_account = TwitterAccount.find_by(name: twitter_user)
-  if twitter_account
-    analytics_client.set_cookies(twitter_account.cookies)
-  else
-    analytics_client.login
-    analytics_client.save_cookies
-  end
-  csv = analytics_client.get_analytics_data
+  csv = analytics_client.get_analytics_data_with_cookies
+  csv = analytics_client.get_analytics_data_with_login unless csv
   sheet_client = GoogleSheetClient.new(spreadsheet_url)
   sheet_client.write_in_spreadsheet(csv, worksheet_name)
 end
