@@ -22,7 +22,7 @@ class TwitterAnalyticsClient
   end
 
   def save_cookies
-    TwitterAccounts.create(name: "#{@user}", cookies: cookies_to_yaml_string)
+    TwitterAccounts.create_or_update(name: "#{@user}", cookies: cookies_to_yaml_string)
   end
 
   def get_analytics_data
