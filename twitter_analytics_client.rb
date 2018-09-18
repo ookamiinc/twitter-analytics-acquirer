@@ -6,17 +6,15 @@ class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'.freeze
   ANALYTICS_URI = 'https://analytics.twitter.com/user'.freeze
 
-  def initialize(user, password)
-    @user = user
-    @password = password
+  def initialize(twitter_user)
+    @user = twitter_user
     @agent = Mechanize.new
     @agent.user_agent_alias = 'Mac Mozilla'
   end
 
   def get_analytics_data_with_cookies
-    twitter_account = TwitterAccount.find_by(name: @user)
-    return unless twitter_account
-    set_cookies(twitter_account.cookies)
+    return unless @user.cookies
+    set_cookies(@user.cookies)
     get_analytics_data
   end
 
@@ -30,13 +28,19 @@ class TwitterAnalyticsClient
   def login
     page = @agent.get(BASE_URI)
     form = page.forms[1]
-    form.field_with(name: "session[username_or_email]").value = @user
-    form.field_with(name: "session[password]").value = @password
+    form.field_with(name: "session[username_or_email]").value = @user.name
+    form.field_with(name: "session[password]").value = @user.password
     form.submit
   end
 
   def save_cookies
-    TwitterAccount.create_or_update(name: "#{@user}", cookies: cookies_to_yaml_string)
+    @user.update(cookies: cookies_to_yaml_string)
+  end
+
+  def set_cookies(cookies_yaml)
+    cookies_io_read = StringIO.new(cookies_yaml, 'r')
+    @agent.cookie_jar.clear
+    @agent.cookie_jar.load(cookies_io_read)
   end
 
   def get_analytics_data
@@ -56,12 +60,6 @@ class TwitterAnalyticsClient
     cookies_io_write.string
   end
 
-  def set_cookies(cookies_yaml)
-    cookies_io_read = StringIO.new(cookies_yaml, 'r')
-    @agent.cookie_jar.clear
-    @agent.cookie_jar.load(cookies_io_read)
-  end
-
   private
 
   def start_date
@@ -73,10 +71,10 @@ class TwitterAnalyticsClient
   end
 
   def export_url
-    "#{ANALYTICS_URI}/#{@user}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@user.name}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 
   def bundle_url
-    "#{ANALYTICS_URI}/#{@user}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@user.name}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 end
