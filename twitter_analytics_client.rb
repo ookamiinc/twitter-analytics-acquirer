@@ -1,6 +1,6 @@
 require 'mechanize'
 require 'rails'
-require './twitter_accounts'
+require './twitter_account'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'.freeze
@@ -22,7 +22,7 @@ class TwitterAnalyticsClient
   end
 
   def save_cookies
-    TwitterAccounts.create_or_update(name: "#{@user}", cookies: cookies_to_yaml_string)
+    TwitterAccount.create_or_update(name: "#{@user}", cookies: cookies_to_yaml_string)
   end
 
   def get_analytics_data
