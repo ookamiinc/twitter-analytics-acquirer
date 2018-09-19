@@ -6,15 +6,15 @@ class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'.freeze
   ANALYTICS_URI = 'https://analytics.twitter.com/user'.freeze
 
-  def initialize(twitter_user)
-    @user = twitter_user
+  def initialize(twitter_account)
+    @account = twitter_account
     @agent = Mechanize.new
     @agent.user_agent_alias = 'Mac Mozilla'
   end
 
   def get_analytics_data_with_cookies
-    return unless @user["cookies"]
-    set_cookies(@user["cookies"])
+    return unless @account["cookies"]
+    set_cookies(@account["cookies"])
     get_analytics_data
   end
 
@@ -45,13 +45,13 @@ class TwitterAnalyticsClient
   def login
     page = @agent.get(BASE_URI)
     form = page.forms[1]
-    form.field_with(name: "session[username_or_email]").value = @user["name"]
-    form.field_with(name: "session[password]").value = @user["password"]
+    form.field_with(name: "session[username_or_email]").value = @account["name"]
+    form.field_with(name: "session[password]").value = @account["password"]
     form.submit
   end
 
   def save_cookies
-    TwitterAccount.update('cookies', cookies_to_yaml_string, @user["id"])
+    TwitterAccount.update('cookies', cookies_to_yaml_string, @account["id"])
   end
 
 
@@ -72,10 +72,10 @@ class TwitterAnalyticsClient
   end
 
   def export_url
-    "#{ANALYTICS_URI}/#{@user["name"]}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@account["name"]}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 
   def bundle_url
-    "#{ANALYTICS_URI}/#{@user["name"]}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@account["name"]}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 end
