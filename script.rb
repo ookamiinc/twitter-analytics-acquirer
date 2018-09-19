@@ -9,5 +9,5 @@ TwitterAccount.all.each do |twitter_user|
   csv = analytics_client.get_analytics_data_with_cookies
   csv = analytics_client.get_analytics_data_with_login unless csv
   sheet_client = GoogleSheetClient.new(spreadsheet_url)
-  sheet_client.write_in_spreadsheet(csv, twitter_user.worksheet_name)
+  sheet_client.write_in_spreadsheet(csv, twitter_user["worksheet_name"])
 end

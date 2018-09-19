@@ -13,8 +13,8 @@ class TwitterAnalyticsClient
   end
 
   def get_analytics_data_with_cookies
-    return unless @user.cookies
-    set_cookies(@user.cookies)
+    return unless @user["cookies"]
+    set_cookies(@user["cookies"])
     get_analytics_data
   end
 
@@ -45,13 +45,13 @@ class TwitterAnalyticsClient
   def login
     page = @agent.get(BASE_URI)
     form = page.forms[1]
-    form.field_with(name: "session[username_or_email]").value = @user.name
-    form.field_with(name: "session[password]").value = @user.password
+    form.field_with(name: "session[username_or_email]").value = @user["name"]
+    form.field_with(name: "session[password]").value = @user["password"]
     form.submit
   end
 
   def save_cookies
-    @user.update(cookies: cookies_to_yaml_string)
+    TwitterAccount.update('cookies', cookies_to_yaml_string, @user["id"])
   end
 
 
@@ -72,10 +72,10 @@ class TwitterAnalyticsClient
   end
 
   def export_url
-    "#{ANALYTICS_URI}/#{@user.name}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@user["name"]}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 
   def bundle_url
-    "#{ANALYTICS_URI}/#{@user.name}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@user["name"]}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 end
