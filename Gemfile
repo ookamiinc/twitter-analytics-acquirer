@@ -6,9 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.4.4'
-gem 'activesupport'
 gem 'activerecord'
-gem 'clockwork'
 gem "google_drive"
 gem 'mechanize'
 gem 'mysql2'
