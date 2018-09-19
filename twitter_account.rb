@@ -1,7 +1,11 @@
 require 'mysql2'
 
 class TwitterAccount
-  @client = Mysql2::Client.new(host: "localhost", username: "root", password: '', database: 'twitter_analytics_acquirer')
+  host = ENV['HOST']
+  username = ENV['USERNAME']
+  password = ENV['PASSWORD']
+  database = ENV['DATABASE']
+  @client = Mysql2::Client.new(host: host, username: username, password: password, database: database)
 
   def self.all
     @client.query("SELECT `twitter_accounts`.* FROM `twitter_accounts`").each
