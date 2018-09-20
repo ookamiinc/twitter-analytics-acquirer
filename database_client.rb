@@ -3,7 +3,10 @@
 require 'mysql2'
 
 class DatabaseClient
-  @@client = Mysql2::Client.new(host: ENV['HOST'], username: ENV['DB_USERNAME'], password: ENV['DB_PASSWORD'], database: ENV['DATABASE'])
+  @@client = Mysql2::Client.new(host: ENV['HOST'],
+                                username: ENV['DB_USERNAME'],
+                                password: ENV['DB_PASSWORD'],
+                                database: ENV['DATABASE'])
 
   def self.all
     @@client.query('SELECT `twitter_accounts`.* FROM `twitter_accounts`')
