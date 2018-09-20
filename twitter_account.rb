@@ -3,18 +3,14 @@
 require 'mysql2'
 
 class TwitterAccount
-  host = ENV['HOST']
-  username = ENV['USERNAME']
-  password = ENV['PASSWORD']
-  database = ENV['DATABASE']
-  @client = Mysql2::Client.new(host: host, username: username, password: password, database: database)
+  @@client = Mysql2::Client.new(host: ENV['HOST'], username: ENV['DB_USERNAME'], password: ENV['DB_PASSWORD'], database: ENV['DATABASE'])
 
   def self.all
-    @client.query('SELECT `twitter_accounts`.* FROM `twitter_accounts`').each
+    @@client.query('SELECT `twitter_accounts`.* FROM `twitter_accounts`').each
   end
 
   def self.update(column, value, id)
-    escaped_value = @client.escape(value.to_s)
-    @client.query("UPDATE `twitter_accounts` SET #{column} = '#{escaped_value}' WHERE id = #{id}")
+    escaped_value = @@client.escape(value.to_s)
+    @@client.query("UPDATE `twitter_accounts` SET #{column} = '#{escaped_value}' WHERE id = #{id}")
   end
 end
