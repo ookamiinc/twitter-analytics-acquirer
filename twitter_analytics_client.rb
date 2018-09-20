@@ -2,7 +2,7 @@
 
 require 'mechanize'
 require 'rails'
-require './twitter_account'
+require './database_client'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'
@@ -59,7 +59,7 @@ class TwitterAnalyticsClient
   end
 
   def save_cookies
-    TwitterAccount.update('cookies', cookies_to_yaml_string, @account['id'])
+    DatabaseClient.update('cookies', cookies_to_yaml_string, @account['id'])
   end
 
   def login
