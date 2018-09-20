@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'csv'
-require "googleauth"
-require "google_drive"
+require 'googleauth'
+require 'google_drive'
 
 class GoogleSheetClient
   def initialize(url)
@@ -27,10 +29,11 @@ class GoogleSheetClient
       client_id: ENV['GOOGLE_CLIENT_ID'],
       client_secret: ENV['GOOGLE_CLIENT_SECRET'],
       scope: [
-        "https://www.googleapis.com/auth/drive",
-        "https://spreadsheets.google.com/feeds/",
+        'https://www.googleapis.com/auth/drive',
+        'https://spreadsheets.google.com/feeds/'
       ],
-      refresh_token: ENV['GOOGLE_REFRESH_TOKEN'])
+      refresh_token: ENV['GOOGLE_REFRESH_TOKEN']
+    )
     @session = GoogleDrive::Session.from_credentials(credentials)
   end
 
