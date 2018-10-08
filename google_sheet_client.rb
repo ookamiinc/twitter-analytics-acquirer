@@ -10,7 +10,7 @@ class GoogleSheetClient
     start_session_with_auth
   end
 
-  def write_in_spreadsheet(csv, worksheet_name)
+  def write_in_spreadsheet(csv, followers_count, worksheet_name)
     worksheet = worksheet(worksheet_name)
     worksheet.delete_rows(1, worksheet.num_rows)
     CSV.parse(csv).each.with_index do |row, index|
@@ -19,6 +19,7 @@ class GoogleSheetClient
         worksheet[index + 1, j] = row[j - 1]
       end
     end
+    worksheet[50, 1] = followers_count
     worksheet.save
   end
 

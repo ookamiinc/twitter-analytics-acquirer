@@ -12,5 +12,5 @@ DatabaseClient.all.each do |twitter_account|
   csv ||= analytics_client.get_analytics_data_with_login
   followers_count = analytics_client.followers_count
   sheet_client = GoogleSheetClient.new(spreadsheet_url)
-  sheet_client.write_in_spreadsheet(csv, twitter_account['worksheet_name'])
+  sheet_client.write_in_spreadsheet(csv, followers_count, twitter_account['worksheet_name'])
 end
