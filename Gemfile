@@ -12,6 +12,7 @@ gem 'google_drive'
 gem 'mechanize'
 gem 'mysql2'
 gem 'rails', '5.0.7'
+gem 'twitter'
 
 group :development do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
