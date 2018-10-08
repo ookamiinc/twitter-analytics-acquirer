@@ -3,6 +3,7 @@
 require 'mechanize'
 require 'rails'
 require './database_client'
+require './twitter_client'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'
@@ -12,6 +13,15 @@ class TwitterAnalyticsClient
     @account = twitter_account
     @agent = Mechanize.new
     @agent.user_agent_alias = 'Mac Mozilla'
+  end
+
+  def followers_count
+    #
+    # See more about #user
+    # http://www.rubydoc.info/gems/twitter/Twitter/REST/Users#user-instance_method
+    #
+    user = Twitter.client.user(@account['name'])
+    user.followers_count
   end
 
   def get_analytics_data_with_cookies
