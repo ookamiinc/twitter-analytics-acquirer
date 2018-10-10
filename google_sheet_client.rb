@@ -19,7 +19,7 @@ class GoogleSheetClient
         worksheet[index + 1, j] = row[j - 1]
       end
     end
-    worksheet.save
+    puts "success! #{worksheet_name}" if worksheet.save
   end
 
   private
