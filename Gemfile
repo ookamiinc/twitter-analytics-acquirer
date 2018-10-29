@@ -8,15 +8,8 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.4.4'
+gem 'derailed', group: :development
+gem 'byebug', platforms: %i[mri mingw x64_mingw]
 gem 'google_drive'
 gem 'mechanize'
 gem 'mysql2'
-gem 'rails', '5.0.7'
-
-group :development do
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'rubocop'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '>= 3.3.0'
-end
