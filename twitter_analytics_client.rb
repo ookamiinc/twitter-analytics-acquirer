@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'mechanize'
-require 'rails'
 require './database_client'
+require 'byebug'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'
@@ -31,7 +31,8 @@ class TwitterAnalyticsClient
   private
 
   def start_date
-    @start_date ||= Time.now.utc.beginning_of_month.to_i.to_s + '000'
+    month = Time.now.strftime('%m').to_i
+    @start_date ||= Time.parse("#{month}/1").to_i.to_s + '000'
   end
 
   def end_date
