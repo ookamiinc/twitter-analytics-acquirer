@@ -40,11 +40,11 @@ class TwitterAnalyticsClient
   end
 
   def export_url
-    "#{ANALYTICS_URI}/#{@account['name']}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@account['name'].downcase}/tweets/export.json?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 
   def bundle_url
-    "#{ANALYTICS_URI}/#{@account['name']}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
+    "#{ANALYTICS_URI}/#{@account['name'].downcase}/tweets/bundle?start_time=#{start_date}&end_time=#{end_date}&lang=ja"
   end
 
   def set_cookies(cookies_yaml)
@@ -74,12 +74,15 @@ class TwitterAnalyticsClient
   def get_analytics_data
     return if @agent.nil?
 
-    @agent.post(export_url)
+    for i in 1..20 do
+      @agent.post(export_url)
+      break if @agent.post(export_url).body.include?("Available")
+      sleep(5)
+    end
     for i in 1..10 do
       res = @agent.get(bundle_url)
+      puts 'nil!!' if res.body.empty?
       break unless res.body.empty?
-
-      sleep(5)
     end
     res.body.force_encoding('utf-8')
   end
