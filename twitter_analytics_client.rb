@@ -53,7 +53,7 @@ class TwitterAnalyticsClient
   end
 
   def cookies_to_yaml_string
-    cookies_io_write = StringIO.new('', 'r+')
+    cookies_io_write = StringIO.new(+'', 'r+')
     @agent.cookie_jar.save(cookies_io_write, session: true)
     cookies_io_write.string
   end
