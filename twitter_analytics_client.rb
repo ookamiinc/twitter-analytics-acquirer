@@ -73,20 +73,20 @@ class TwitterAnalyticsClient
 
   def get_analytics_data
     return if @agent.nil?
-    puts @agent
+    logger.debug(@agent.inspect)
 
     for i in 1..20 do
       @agent.post(export_url)
       break if @agent.post(export_url).body.include?("Available")
       sleep(5)
     end
-    puts @agent
+    logger.debug(@agent.inspect)
     for i in 1..10 do
       res = @agent.get(bundle_url)
       puts 'nil!!' if res.body.empty?
       break unless res.body.empty?
     end
-    puts @agent
+    logger.debug(@agent.inspect)
     res.body.force_encoding('utf-8')
   end
 end
