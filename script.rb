@@ -8,7 +8,6 @@ require 'byebug'
 spreadsheet_url = ENV['SPREADSHEET_URL']
 
 DatabaseClient.all.each do |twitter_account|
-  next unless twitter_account["name"] == 'Player_twi'
   analytics_client = TwitterAnalyticsClient.new(twitter_account)
   csv = analytics_client.get_analytics_data_with_cookies
   csv ||= analytics_client.get_analytics_data_with_login
