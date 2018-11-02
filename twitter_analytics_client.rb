@@ -73,6 +73,7 @@ class TwitterAnalyticsClient
 
   def get_analytics_data
     return if @agent.nil?
+    logger = Logger.new(STDERR)
     logger.debug(@agent.inspect)
 
     for i in 1..20 do
