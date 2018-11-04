@@ -12,6 +12,7 @@ class TwitterAnalyticsClient
     @account = twitter_account
     @agent = Mechanize.new
     @agent.user_agent_alias = 'Mac Mozilla'
+    @logger = Logger.new(STDERR)
   end
 
   def get_analytics_data_with_cookies
@@ -73,21 +74,22 @@ class TwitterAnalyticsClient
 
   def get_analytics_data
     return if @agent.nil?
-    logger = Logger.new(STDERR)
-    logger.debug(@agent.inspect)
 
     for i in 1..20 do
-      @agent.post(export_url)
-      break if @agent.post(export_url).body.include?("Available")
-      sleep(5)
-    end
-    logger.debug(@agent.inspect)
-    for i in 1..10 do
+      puts 'post送る前!!============================'
+      puts ''
+      pos = @agent.post(export_url)
+      @logger.debug(pos)
+      puts 'post送った後============================'
+      puts ''
       res = @agent.get(bundle_url)
+      @logger.debug(res)
+      puts 'get送った後============================'
+      puts ''
       puts 'nil!!' if res.body.empty?
+      sleep(5)
       break unless res.body.empty?
     end
-    logger.debug(@agent.inspect)
     res.body.force_encoding('utf-8')
   end
 end
