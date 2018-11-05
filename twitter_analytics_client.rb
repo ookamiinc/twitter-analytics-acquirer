@@ -32,12 +32,11 @@ class TwitterAnalyticsClient
   private
 
   def start_date
-    month = Time.now.strftime('%m').to_i
-    @start_date ||= Time.parse("#{month}/1").to_i.to_s + '000'
+    @start_date ||= Time.parse('2018-10-01 00:00:00 +0900').to_i.to_s + '000'
   end
 
   def end_date
-    @end_date ||= Time.now.utc.to_i.to_s + '999'
+    @end_date ||= Time.parse('2018-10-31 23:00:00 +0900').to_i.to_s + '000'
   end
 
   def export_url
@@ -75,19 +74,20 @@ class TwitterAnalyticsClient
   def get_analytics_data
     return if @agent.nil?
 
-    for i in 1..20 do
-      puts 'post送る前!!============================'
-      puts ''
+    for i in 1..50 do
+      #puts 'post送る前!!============================'
+      #puts ''
       pos = @agent.post(export_url)
-      @logger.debug(pos)
-      puts 'post送った後============================'
-      puts ''
+      #@logger.debug(pos)
+      #puts 'post送った後============================'
+      #puts ''
       res = @agent.get(bundle_url)
-      @logger.debug(res)
-      puts 'get送った後============================'
-      puts ''
+      #@logger.debug(res)
+      #puts 'get送った後============================'
+      #puts ''
       puts 'nil!!' if res.body.empty?
       sleep(5)
+      puts i unless res.body.empty?
       break unless res.body.empty?
     end
     res.body.force_encoding('utf-8')
