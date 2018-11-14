@@ -11,13 +11,14 @@ class GoogleSheetClient
   end
 
   def write_in_spreadsheet(csv, worksheet_name, stored_csv_length)
-    stored_csv_length = 0 unless stored_csv_length
+    stored_csv_length = 0
     worksheet = worksheet(worksheet_name)
-    worksheet.delete_rows(stored_csv_length + 1, worksheet.num_rows)
-    CSV.parse(csv).each.with_index do |row, index|
-      j = 1
+    parsed_csv_without_header = CSV.parse(csv)[1..-1]
+    return unless parsed_csv_without_header
+    reversed_csv = parsed_csv_without_header.reverse
+    reversed_csv.each.with_index do |row, index|
       for j in 1..row.count do
-        worksheet[index + stored_csv_length + 1, j] = row[j - 1]
+        worksheet[index + 2, j] = row[j - 1] #現在は２行目から書き込まれているようにしている
       end
     end
     puts "success! @#{worksheet_name}" if worksheet.save
