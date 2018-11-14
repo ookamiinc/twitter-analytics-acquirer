@@ -10,13 +10,14 @@ class GoogleSheetClient
     start_session_with_auth
   end
 
-  def write_in_spreadsheet(csv, worksheet_name)
+  def write_in_spreadsheet(csv, worksheet_name, stored_csv_length)
+    stored_csv_length = 0 unless stored_csv_length
     worksheet = worksheet(worksheet_name)
-    worksheet.delete_rows(1, worksheet.num_rows)
+    worksheet.delete_rows(stored_csv_length + 1, worksheet.num_rows)
     CSV.parse(csv).each.with_index do |row, index|
       j = 1
       for j in 1..row.count do
-        worksheet[index + 1, j] = row[j - 1]
+        worksheet[index + stored_csv_length + 1, j] = row[j - 1]
       end
     end
     puts "success! @#{worksheet_name}" if worksheet.save
