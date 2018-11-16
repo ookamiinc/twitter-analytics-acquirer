@@ -32,11 +32,12 @@ class TwitterAnalyticsClient
   private
 
   def start_date
-    @start_date ||= Time.parse('2018-10-01 00:00:00 +0900').to_i.to_s + '000'
+    month = Time.now.strftime('%m').to_i
+    @start_date ||= Time.parse("#{month}/1").to_i.to_s + '000'
   end
 
   def end_date
-    @end_date ||= Time.parse('2018-10-31 23:00:00 +0900').to_i.to_s + '000'
+    @end_date ||= Time.now.utc.to_i.to_s + '000'
   end
 
   def export_url
