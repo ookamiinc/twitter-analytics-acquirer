@@ -79,7 +79,7 @@ class TwitterAnalyticsClient
       res = @agent.get(bundle_url)
       puts 'nil!!' if res.body.empty?
       sleep(5)
-      puts i unless res.body.empty?
+      puts "number_of_loop: #{i}" unless res.body.empty?
       break unless res.body.empty?
     end
     res.body.force_encoding('utf-8')
