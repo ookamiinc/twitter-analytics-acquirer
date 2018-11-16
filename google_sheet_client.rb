@@ -23,7 +23,7 @@ class GoogleSheetClient
       puts "success! @#{worksheet_name} at #{slice_index+1}" if worksheet.save
       sleep (5)
     end
-    puts "All success! @#{worksheet_name}
+    puts "All success! @#{worksheet_name}"
   end
 
   private
