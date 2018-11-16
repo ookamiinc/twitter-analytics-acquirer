@@ -20,6 +20,7 @@ class GoogleSheetClient
         end
       end
       puts "success! @#{worksheet_name} at #{slice_index+1}" if worksheet.save
+      sleep (5)
     end
   end
 
