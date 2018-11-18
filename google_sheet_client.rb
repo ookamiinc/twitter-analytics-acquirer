@@ -7,23 +7,31 @@ require 'google_drive'
 class GoogleSheetClient
   def initialize(url)
     @url = url
+    @logger = Logger.new(STDOUT)
     start_session_with_auth
   end
 
   def write_in_spreadsheet(csv, worksheet_name)
     worksheet = worksheet(worksheet_name)
     worksheet.delete_rows(1, worksheet.num_rows)
-    CSV.parse(csv).each_slice(50).with_index do |csv, slice_index|
-      csv.each.with_index do |row, index|
-        head_line = slice_index * 50
-        for j in 1..row.count do
-          worksheet[head_line + index + 1, j] = row[j - 1]
+    begin
+      CSV.parse(csv).each_slice(50).with_index do |csv, slice_index|
+        csv.each.with_index do |row, index|
+          head_line = slice_index * 50
+          for j in 1..row.count do
+            worksheet[head_line + index + 1, j] = row[j - 1]
+          end
         end
+        puts "success! @#{worksheet_name} at #{slice_index+1}" if worksheet.save
+        sleep (5)
       end
-      puts "success! @#{worksheet_name} at #{slice_index+1}" if worksheet.save
-      sleep (5)
+      puts "All success! @#{worksheet_name}"
+      @logger.debug(@session)
+    rescue => e
+      puts 'エラーが起きました！！！'
+      @logger.debug(e)
+      @logger.debug(@session)
     end
-    puts "All success! @#{worksheet_name}"
   end
 
   private
