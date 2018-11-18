@@ -26,11 +26,11 @@ class GoogleSheetClient
         sleep (5)
       end
       puts "All success! @#{worksheet_name}"
-      @logger.debug(@session)
+      @logger.debug(@session.inspect)
     rescue => e
       puts 'エラーが起きました！！！'
-      @logger.debug(e)
-      @logger.debug(@session)
+      @logger.debug(e.inspect)
+      @logger.debug(@session.inspect)
     end
   end
 
