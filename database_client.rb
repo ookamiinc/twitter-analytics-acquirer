@@ -24,4 +24,8 @@ class DatabaseClient
       @@client.query("UPDATE `twitter_accounts` SET #{column} = '#{escaped_value}' WHERE id = #{id}")
     end
   end
+
+  def self.add_account(name, password)
+    @@client.query("INSERT INTO twitter_accounts (name, password, worksheet_name) VALUES ('#{name}', '#{password}', '#{name}')")
+  end
 end
