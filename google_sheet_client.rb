@@ -28,7 +28,7 @@ class GoogleSheetClient
       puts "All success! @#{worksheet_name}"
     rescue => e
       @logger.debug(e.inspect)
-      raise 'エラーが起きました！！！'
+      raise 'Error is occurred!'
     end
   end
 
