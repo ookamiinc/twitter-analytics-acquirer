@@ -8,8 +8,6 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.4.4'
-gem 'derailed', group: :development
-gem 'byebug', platforms: %i[mri mingw x64_mingw]
 gem 'google_drive'
 gem 'mechanize'
 gem 'mysql2'
