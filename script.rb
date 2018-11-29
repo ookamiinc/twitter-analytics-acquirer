@@ -3,7 +3,6 @@
 require './twitter_analytics_client'
 require './google_sheet_client'
 require './database_client'
-require 'byebug'
 
 spreadsheet_url = ENV['SPREADSHEET_URL']
 

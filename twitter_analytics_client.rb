@@ -2,7 +2,6 @@
 
 require 'mechanize'
 require './database_client'
-require 'byebug'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'
