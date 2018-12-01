@@ -76,7 +76,13 @@ class TwitterAnalyticsClient
 
     for i in 1..80 do
       pos = @agent.post(export_url)
-      res = @agent.get(bundle_url)
+      begin
+        res = @agent.get(bundle_url)
+      rescue => e
+        puts e
+        puts @agent.inspect
+        res = @agent.get(bundle_url)
+      end
       puts 'nil!!' if res.body.empty?
       sleep(5)
       puts "number_of_loop: #{i}" unless res.body.empty?
