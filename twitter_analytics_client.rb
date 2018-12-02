@@ -78,7 +78,8 @@ class TwitterAnalyticsClient
       pos = @agent.post(export_url)
       begin
         res = @agent.get(bundle_url)
-      rescue => e
+      rescue Mechanize::ResponseCodeError => e
+        puts '************エラー****************'
         puts e
         puts @agent.inspect
         res = @agent.get(bundle_url)
@@ -88,6 +89,7 @@ class TwitterAnalyticsClient
       puts "number_of_loop: #{i}" unless res.body.empty?
       break unless res.body.empty?
     end
+    puts @agent.inspect
     res.body.force_encoding('utf-8')
   end
 end
