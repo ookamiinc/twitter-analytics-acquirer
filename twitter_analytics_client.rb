@@ -2,6 +2,7 @@
 
 require 'mechanize'
 require './database_client'
+require './memory_calaculator'
 
 class TwitterAnalyticsClient
   BASE_URI = 'https://twitter.com'
@@ -86,7 +87,11 @@ class TwitterAnalyticsClient
       end
       puts 'nil!!' if res.body.empty?
       sleep(5)
-      puts "number_of_loop: #{i}" unless res.body.empty?
+      unless res.body.empty?
+        puts "number_of_loop: #{i}"
+        memory_size_by_byte = MemoryCalaculator.new(res).call
+        puts "#{memory_size_by_byte}"
+      end
       break unless res.body.empty?
     end
     puts @agent.inspect
