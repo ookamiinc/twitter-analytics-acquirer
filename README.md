@@ -57,3 +57,27 @@ You can see the message below if you successfully add account.
 ```
 Account is successfully created! Name:account1, Password:password1"
 ```
+
+## Remove Twitter Account
+
+There are two ways.
+
+1. Remove twitter account from DB
+2. Add the twitter account to `SKIPPED_ACCOUNT_NAMES`
+
+
+### 1. Remove the twitter account from DB
+
+When you plan never to get the twitter account's data, I recommend this way.
+
+### 2. Add the twitter account to `SKIPPED_ACCOUNT_NAMES`
+
+You can avoid getting the twitter account's data by adding it to `SKIPPED_ACCOUNT_NAMES`.
+
+`SKIPPED_ACCOUNT_NAMES` is ENV value and should be array.
+
+### Example
+
+`SKIPPED_ACCOUNT_NAMES` = ['skipped_twitter_account', 'skipped_twitter_account2']
+
+Then you can avoid to get data of `skipped_twitter_account` and `skipped_twitter_account2` with not removing them from DB.
