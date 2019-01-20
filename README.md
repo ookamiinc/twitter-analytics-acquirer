@@ -80,4 +80,4 @@ You can avoid getting the twitter account's data by adding it to `SKIPPED_ACCOUN
 
 `SKIPPED_ACCOUNT_NAMES` = ['skipped_twitter_account', 'skipped_twitter_account2']
 
-Then you can avoid to get data of `skipped_twitter_account` and `skipped_twitter_account2` with not removing them from DB.
+Then you can avoid getting data of `skipped_twitter_account` and `skipped_twitter_account2` with not removing them from DB.
