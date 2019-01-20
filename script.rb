@@ -7,10 +7,7 @@ require './database_client'
 spreadsheet_url = ENV['SPREADSHEET_URL']
 
 DatabaseClient.all.each do |twitter_account|
-  next if twitter_account['name'] == 'Playerapp_cbsk'
-  # I remove Player_twi because this account has too much data.
-  # But I want to save cookies data, so deal with it by adding next process.
-  next if twitter_account['name'] == 'Player_twi'
+  next if ENV['SKIPPED_ACCOUNT_NAMES'].include?(twitter_account['name'])
   analytics_client = TwitterAnalyticsClient.new(twitter_account)
   csv = analytics_client.get_analytics_data_with_cookies
   csv ||= analytics_client.get_analytics_data_with_login
